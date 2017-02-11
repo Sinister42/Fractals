@@ -1,0 +1,10 @@
+
+
+
+/*
+* f(z) = (0.5z^4 + 2z^2 - 0.9z -1)/(-0.7z^2 - 0.2z +1)
+* Heart newton fractal eqn
+* or maybe this is the right one
+* f(z) = z - (0.5z^4 + 2z^2 - 0.9z -1)/(-0.7z^2 - 0.2z +1)
+*/
+
