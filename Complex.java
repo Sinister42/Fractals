@@ -35,6 +35,10 @@ public class Complex{
 		re += c.getRe();
 		im += c.getIm();
 	}
+	public void add(double re_c, double im_c){
+		re += re_c;
+		im += im_c;
+	}
 	
 	public void mul(double m){
 		re *= m;
@@ -63,5 +67,8 @@ public class Complex{
 	public double getIm(){
 		return im;
 	}
-	
+	public void setRe_Im(double re_c, double im_c){
+		re = re_c;
+		im = im_c;
+	}
 }
