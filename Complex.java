@@ -15,25 +15,29 @@ public class Complex{
 		double img = 2 * c.getRe() * c.getIm();
 		return new Complex(real,img);
 	}
-	public void pow2(){
-		re = (re * re)-(im * im);
-		im = 2 * re * im;
+	public Complex pow2(){
+		double real = (re * re)-(im * im);
+		double img = 2 * re * im;
+		return new Complex(real,img);
 	}
+	
 	
 	
 	public Complex pow4(Complex c){
 		return pow2(pow2(c));
 	}
 	public void pow4(){
-		this.pow2().pow2();
+		pow2();
+		pow2();
 	}
 	
 	public Complex add(Complex c1, Complex c2){
 		return new Complex(c1.getRe()+c2.getRe(), c1.getIm()+c2.getIm());
 	}
-	public void add(Complex c){
+	public Complex add(Complex c){
 		re += c.getRe();
 		im += c.getIm();
+		return new Complex(re,im);
 	}
 	public void add(double re_c, double im_c){
 		re += re_c;
@@ -70,5 +74,9 @@ public class Complex{
 	public void setRe_Im(double re_c, double im_c){
 		re = re_c;
 		im = im_c;
+	}
+	@Override
+	public String toString(){
+		return re + " " + im;
 	}
 }

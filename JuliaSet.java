@@ -8,10 +8,9 @@ public class JuliaSet {
 	private final int DEFAULT_WIDTH = 640;
 	private final int DEFAULT_HEIGHT = 480;
 	private final Complex c = new Complex(-0.4, 0.6);
-	private final double XMAX = 1.6;
-	private final double YMAX = 1;
+	private final double XMAX = 2.0;
+	private final double YMAX = 2.0;
 	
-	private double[] fractArr;
 	private int iter;
 	private int width;
 	private int height;
@@ -25,13 +24,11 @@ public class JuliaSet {
 	public JuliaSet(int width, int height, int iter, double xmax, double ymax){
 		this.xmax = xmax; this.ymax = ymax;
 		xmin = (-1)*xmax; ymin = (-1)*ymax;
-		fractArr = new double[width*height];
 		this.width = width;
 		this.height = height;
 		this.iter = iter;
 	}
 	public JuliaSet(int width, int height){
-		fractArr = new double[width*height];
 		this.width = width;
 		this.height = height;
 		xmax = XMAX;
@@ -41,7 +38,6 @@ public class JuliaSet {
 		iter = DEFAULT_ITER;
 	}
 	public JuliaSet(){
-		fractArr = new double[DEFAULT_HEIGHT*DEFAULT_WIDTH];
 		width = DEFAULT_WIDTH;
 		height = DEFAULT_HEIGHT;
 		iter = DEFAULT_ITER;
@@ -52,6 +48,28 @@ public class JuliaSet {
 	}
 	
 	public double[] juliaFractals(){
+		double[] fractArr = new double[width*height];
+		double horiz_move = (2*xmax)/width;
+		double verti_move = (2*ymax)/height;
+		Complex curr;
+		
+		for(int i = 0; i < height; i++){
+			for(int j = 0; j < width; j++){
+				curr = new Complex(xmin + (i*horiz_move), ymin + (j*verti_move));
+				for(int k = 0; k < iter; k++){
+					if(curr.abs() > 4.0){
+						fractArr[i*j] = (double)(k)/(double)iter;
+						break;
+					}
+					curr = curr.pow2();
+					curr = curr.add(c);
+				}
+			}
+		}
+		return fractArr;
+	}
+	/*
+	public double[] juliaFractals(){
 		x = xmin;
 		y = ymax;
 		double horiz_move = (2*xmax)/width;
@@ -60,22 +78,34 @@ public class JuliaSet {
 		for(int i = 0; i < height; i++){
 			for(int j = 0; j < width; j++){
 				for (int k = 0; k < iter; k++){
-					if(curr.abs() > 2){
-						fractArr[i*j] = (double)(k-1)/(double)iter;
+					double abso = curr.abs();
+					System.out.print("1: K: " + k + " C: "+ curr.toString()+ " abs: "+ abso+ "\n");
+					if(abso > 2.0){
+						System.out.print("2: K: " + k + " C: "+ curr.toString()+ " abs: "+ abso+ "\n");
+						try{
+							Thread.sleep(100);
+						} catch(InterruptedException e){
+							System.out.println(e.getMessage());
+						}
+						double t =(double)(k-1)/(double)iter;
+						// System.out.println("JS-T: "+t);
+						fractArr[i*j] = t;
 						break;
 					}
 					curr.pow2();
 					curr.add(c);
 				}
-				if(fractArr[i*j] == 0.0){
-					fractArr[i*j] = 1;
-				}
-				curr.add(horiz_move,0);
+				// if(fractArr[i*j] == 0.0){
+					// fractArr[i*j] = 1;
+				// }
+				curr.setRe_Im(x,y);
+				curr.add(j*horiz_move,i*verti_move);
 			}
-			curr.setRe_Im(x, curr.getIm());
-			curr.add(0,verti_move);
+			curr.setRe_Im(x, y);
+			curr.add(0,i*verti_move);
 		}
-	}
+		return fractArr;
+	*/
 	
 	public int getWidth(){
 		return width;
