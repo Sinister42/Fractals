@@ -5,11 +5,11 @@
 */
 public class JuliaSet {
 	private final int DEFAULT_ITER = 150;
-	private final int DEFAULT_WIDTH = 640;
-	private final int DEFAULT_HEIGHT = 480;
+	private final int DEFAULT_WIDTH = 600;
+	private final int DEFAULT_HEIGHT = 680;
 	private final Complex c = new Complex(-0.4, 0.6);
-	private final double XMAX = 2.0;
-	private final double YMAX = 2.0;
+	private final double XMAX = 1.6;
+	private final double YMAX = 1.0;
 	
 	private int iter;
 	private int width;
@@ -47,8 +47,8 @@ public class JuliaSet {
 		ymin = -YMAX;
 	}
 	
-	public double[] juliaFractals(){
-		double[] fractArr = new double[width*height];
+	public double[][] juliaFractals(){
+		double[][] fractArr = new double[height][width];
 		double horiz_move = (2*xmax)/width;
 		double verti_move = (2*ymax)/height;
 		Complex curr;
@@ -57,12 +57,12 @@ public class JuliaSet {
 			for(int j = 0; j < width; j++){
 				curr = new Complex(xmin + (i*horiz_move), ymin + (j*verti_move));
 				for(int k = 0; k < iter; k++){
-					if(curr.abs() > 4.0){
-						fractArr[i*j] = (double)(k)/(double)iter;
+					if(curr.abs() > 2.0){
+						fractArr[i][j] = (double)(k)/(double)iter;
 						break;
 					}
-					curr = curr.pow2();
-					curr = curr.add(c);
+					curr = curr.pow2().add(c);
+					//curr = curr.add(c);
 				}
 			}
 		}

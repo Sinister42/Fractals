@@ -21,14 +21,14 @@ public class JPGCreation{
 	}
 	
 	public void create(){
-		double[] fractArr = js.juliaFractals();
+		double[][] fractArr = js.juliaFractals();
 		WritableImage writableImg = new WritableImage(width,height);
 		PixelWriter pWriter = writableImg.getPixelWriter();
 		//TODO - write the colours onto the writableImg
 		for(int i = 0; i < height-1; i++){
 			for(int j = 0; j < width-1; j++){
 				//TODO - p = (a<<24) | (r<<16) | (g<<8) | b
-				double t = fractArr[i*j];
+				double t = fractArr[i][j];
 				int r = (int)(9*(1-t)*(Math.pow(t,3))*255);
 				int g = (int)(15*(Math.pow((1-t),2))*(Math.pow(t,2))*255);
 				int b = (int)(8.5*(Math.pow((1-t),3))*t*255);
